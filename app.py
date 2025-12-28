@@ -14,26 +14,65 @@ pd.options.mode.chained_assignment = None
 st.set_page_config(layout="wide", page_title="Suv Monitoringi | Water Monitoring")
 
 # --- CSS: IXCHAMLASHTIRISH / COMPACT STYLE ---
+# --- CSS: IXCHAMLASHTIRISH VA DARK MODENI O'CHIRISH ---
 st.markdown("""
 <style>
-    /* Tepadan joy tashlashni kamaytirish / Reduce top padding */
-    .block-container {
-        padding-top: 3rem;
-        padding-bottom: 0rem;
-        padding-left: 2rem;
-        padding-right: 2rem;
+    /* 1. MAJBURIY OQ FON (Force Light Mode) */
+    /* Bu kod telefon qora rejimda bo'lsa ham saytni oq qiladi */
+    [data-testid="stAppViewContainer"] {
+        background-color: white;
+        color: black;
     }
-    /* KPI ramkalarini ixcham qilish / Compact Metric Cards */
+    [data-testid="stSidebar"] {
+        background-color: #F0F2F6; /* Sidebar uchun och kulrang */
+    }
+    [data-testid="stHeader"] {
+        background-color: rgba(0,0,0,0); /* Tepasini shaffof qilish */
+    }
+    
+    /* 2. ORTIQCHA TUGMALARNI YASHIRISH (Clean UI) */
+    .stDeployButton {display:none;}        /* Deploy tugmasi */
+    #MainMenu {visibility: hidden;}        /* Tepadagi 3 ta nuqta menu */
+    footer {visibility: hidden;}           /* Pastdagi "Made with Streamlit" */
+    header {visibility: hidden;}           /* Tepadagi rangli chiziq */
+    
+    /* 3. PASTDAGI ADMIN TUGMALARINI YASHIRISH */
+    /* "Manage App" tugmasi va GitHub profilini yashirish */
+    .stApp > header {display: none;}
+    a[href^="https://github.com"] {display: none;} /* GitHub linklarini yashirish */
+    
+    /* Agar Streamlit versiyasi yangi bo'lsa, pastdagi toolbar: */
+    [data-testid="stToolbar"] {visibility: hidden;} 
+    .viewerBadge_container__1QSob {display: none;}
+
+    /* 4. LAYOUT NI IXCHAMLASHTIRISH */
+    .block-container {
+        padding-top: 2rem;
+        padding-bottom: 0rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
     div[data-testid="stMetric"] {
-        background-color: #F0F2F6;
+        background-color: #F8F9FB; /* Kartochka foni */
         border: 1px solid #D6D9E0;
         padding: 10px;
         border-radius: 8px;
+        color: black; /* Yozuv rangi qora */
     }
-    /* Sarlavhani kichraytirish / Smaller Title */
+    /* Kartochka ichidagi yozuvlarni ham majburan qora qilish */
+    div[data-testid="stMetricLabel"] p {
+        color: #31333F !important;
+    }
+    div[data-testid="stMetricValue"] div {
+        color: #000000 !important;
+    }
     h1 {
         font-size: 1.6rem !important;
-        margin-bottom: 0rem !important;
+        margin-bottom: 1rem !important;
+        color: black !important;
+    }
+    h3, h5, p, div {
+        color: black !important; /* Hamma yozuvni qora qilish */
     }
 </style>
 """, unsafe_allow_html=True)
@@ -219,4 +258,5 @@ with col_stats:
         top.style.format("{:.0f}").background_gradient(cmap="Reds", subset=['Current_Demand_Ha']),
         use_container_width=True,
         height=300 
+
     )
